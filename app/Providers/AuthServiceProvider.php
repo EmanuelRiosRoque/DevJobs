@@ -4,9 +4,11 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Auth\Notifications\VerifyEmail;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,12 +27,16 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        VerifyEmail::toMailUsing(function( $notifiable, $url ) {
+        VerifyEmail::$toMailCallback = function($notifiable, $verificationUrl) {
             return (new MailMessage)
-            ->subject('Verificar Cuneta')
-            ->line('Tu Cuenta ya esta casi lista, solo debes presionar el enlace a continuacion')
-            ->action('Confirmar Cuenta', $url)
-            ->line('Si no creaste esta cuenta puedes ignorar este mensaje');
-        });
+                ->subject(Lang::get('Verifica tu Correo Electronico'))
+                ->greeting(Lang::get("Hola ") . $notifiable->name)
+                ->line(Lang::get('Tu cuenta esta casi lista solo debes presionar el boton "Verificar"'))
+                ->action(Lang::get('Vereficar Ahora'), $verificationUrl)
+                ->line(Lang::get('SI tu no creaste esta cuenta puedes ignorar este mensaje'))
+                ->salutation(new HtmlString(
+                Lang::get("Equipo").'<br>' .'<strong>'. Lang::get("DevJobs") . '</strong>'
+            ));
+        };
     }
 }
