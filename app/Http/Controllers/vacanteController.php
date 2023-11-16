@@ -19,7 +19,7 @@ class vacanteController extends Controller
      */
     public function create()
     {
-        //
+        return view('vacantes.create');
     }
 
     /**
