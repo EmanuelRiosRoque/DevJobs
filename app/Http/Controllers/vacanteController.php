@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vacante;
 use Illuminate\Http\Request;
 
 class vacanteController extends Controller
@@ -11,6 +12,7 @@ class vacanteController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Vacante::class);
         return view('vacantes.index');
     }
 
@@ -19,46 +21,26 @@ class vacanteController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Vacante::class);
         return view('vacantes.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Vacante $vacante)
     {
-        //
+        $this->authorize('update', $vacante);
+
+        return view('vacantes.edit', [
+            'vacante' => $vacante
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function show(Vacante $vacante) {
+        return view('vacantes.show', [
+            'vacante' => $vacante
+        ]);
     }
 }

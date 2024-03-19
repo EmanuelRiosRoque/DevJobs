@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\vacanteController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +22,15 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [vacanteController::class, 'index'])->middleware(['auth', 'verified'])->name('vacantes.index');
 Route::get('/vacantes/create', [vacanteController::class, 'create'])->middleware(['auth', 'verified'])->name('vacantes.create');
+Route::get('/vacantes/{vacante}/edit', [vacanteController::class, 'edit'])->middleware(['auth', 'verified'])->name('vacantes.edit');
+Route::get('/vacantes/{vacante}', [vacanteController::class, 'show'])->name('vacantes.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get("/notificaciones", NotificationController::class)->middleware('auth', 'verified')->name('notificaciones');
 
 require __DIR__.'/auth.php';
