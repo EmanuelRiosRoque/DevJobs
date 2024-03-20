@@ -15,6 +15,9 @@ class RolUsuario
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if(auth()->user()->rol === 1){
+            return redirect()->route('home');
+        }
         return $next($request);
     }
 }
