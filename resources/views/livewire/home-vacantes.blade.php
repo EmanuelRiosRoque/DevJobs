@@ -1,5 +1,5 @@
 <div>
-
+    <livewire:filtrar-vacantes />
     <div class="py-12">
         <div class="max-w-7xl mx-auto">
             <h3 class="font-extrabold text-4xl text-gray-700 mb-12">Nuestras vacantes disponibles</h3>
@@ -11,10 +11,9 @@
                                 {{$vacante->titulo}}
                             </a>
                             <p class="text-base mb-1">Empresa: {{$vacante->empresa}}</p>
-                            <p class="text-sm text-gray-600">
-                                Ultimo dia para postularse:
-                                <span class="text-gray-600 font-bold">{{$vacante->ultimo_dia->format('d/m/Y')}}</span>
-                            </p>
+                            <p class="text-base text-gray-600 mb-1">Categoria: <span class="font-bold"> {{$vacante->categoria->categoria}} </span></p>
+                            <p class="text-base text-gray-600 mb-1">Salario: <span class="font-bold"> {{$vacante->salario->salario}} </span></p>
+                            <p class="text-sm text-gray-600">Ultimo dia para postularse: <span class="text-gray-600 font-bold">{{$vacante->ultimo_dia->format('d/m/Y')}}</span></p>
                         </div>
                         <div class="mt-5 md:mt-0">
                             <a
